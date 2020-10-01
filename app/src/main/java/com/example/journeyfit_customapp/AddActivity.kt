@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 //Spinner: https://developer.android.com/guide/topics/ui/controls/spinner
 
 class AddActivity : AppCompatActivity(){
-    val activitiesList = listOf<String>( "Running", "Walking", "Basketball", "Tennis", "Other")
+    val activitiesList = listOf( "Running", "Walking", "Basketball", "Tennis", "Other")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.individual_activity)

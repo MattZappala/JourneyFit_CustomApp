@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">JourneyFit_CustomApp</string>
+    <string name="text_journeyfit">JourneyFit</string>
+    <string name="text_add_activity">Add Activity</string>
+    <string name="text_view_activity_list">View Activity List</string>
+    <string name="text_schedule_activity">Schedule Activity</string>
+    <string name="desc_add_image">add_image</string>
+    <string name="desc_schedule_activity">schedule_activity</string>
+    <string name="desc_list_image">list_image</string>
+    <string name="text_date">Date</string>
+    <string name="text_other_activity">Other Activity</string>
+    <string name="text_km">Km</string>
+    <string name="text_feel_bad_to_good">Feel: Bad to Good</string>
+    <string name="text_location">Location</string>
+    <string name="text_comments">Comments:</string>
+    <string name="text_submit">Submit</string>
+    <string name="text_other">Other</string>
+    <string name="text_time">Time</string>
+    <string name="text_1_0">1.0</string>
+    <string name="text_kew">Kew</string>
+    <string name="text_view_activites">View Activites</string>
+    <string name="text_activity_type">Activity Type</string>
+    <string name="text_date_01_01_20">Date 01/01/20</string>
+    <string name="view">View</string>
+</resources>

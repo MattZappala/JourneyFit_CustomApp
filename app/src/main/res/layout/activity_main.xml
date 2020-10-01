@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36sp"
+        android:text="@string/text_journeyfit"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="68sp"
+        android:contentDescription="@string/desc_add_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textTitle"
+        app:srcCompat="@drawable/ic_launcher_background" />
+
+    <ImageView
+        android:id="@+id/imageList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="68sp"
+        android:contentDescription="@string/desc_list_image"
+        app:layout_constraintEnd_toEndOf="@+id/imageAdd"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/imageAdd"
+        app:layout_constraintTop_toBottomOf="@+id/imageAdd"
+        app:srcCompat="@drawable/ic_launcher_background" />
+
+    <ImageView
+        android:id="@+id/imageSchedule"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="68sp"
+        android:contentDescription="@string/desc_schedule_activity"
+        app:layout_constraintEnd_toEndOf="@+id/imageList"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/imageList"
+        app:layout_constraintTop_toBottomOf="@+id/imageList"
+        app:srcCompat="@drawable/ic_launcher_background" />
+
+    <TextView
+        android:id="@+id/textAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/text_add_activity"
+        app:layout_constraintEnd_toEndOf="@+id/imageAdd"
+        app:layout_constraintStart_toStartOf="@+id/imageAdd"
+        app:layout_constraintTop_toBottomOf="@+id/imageAdd" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/text_view_activity_list"
+        app:layout_constraintEnd_toEndOf="@+id/imageList"
+        app:layout_constraintStart_toStartOf="@+id/imageList"
+        app:layout_constraintTop_toBottomOf="@+id/imageList" />
+
+    <TextView
+        android:id="@+id/textSchedule"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/text_schedule_activity"
+        app:layout_constraintEnd_toEndOf="@+id/imageSchedule"
+        app:layout_constraintStart_toStartOf="@+id/imageSchedule"
+        app:layout_constraintTop_toBottomOf="@+id/imageSchedule" />
+</androidx.constraintlayout.widget.ConstraintLayout>

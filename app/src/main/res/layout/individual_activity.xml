@@ -22,7 +22,6 @@
         android:layout_marginTop="12sp"
         android:ems="10"
         android:inputType="date"
-        android:text="@string/text_date"
         android:hint="@string/text_date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -48,7 +47,6 @@
         android:importantForAutofill="no"
         android:hint="@string/text_other"
         android:inputType="textPersonName"
-        android:text="@string/text_other_activity"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinner" />
@@ -113,17 +111,16 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12sp"
         android:ems="10"
-        android:hint="@string/text_kew"
+        android:hint="@string/text_location"
         android:importantForAutofill="no"
         android:inputType="textPersonName"
-        android:text="@string/text_location"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/seekBarFeel" />
 
     <EditText
-        android:id="@+id/editTextTextMultiLine"
+        android:id="@+id/editComments"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12sp"
@@ -147,6 +144,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextMultiLine" />
+        app:layout_constraintTop_toBottomOf="@+id/editComments" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

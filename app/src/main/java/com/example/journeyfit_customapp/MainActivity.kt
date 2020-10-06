@@ -18,9 +18,9 @@ class MainActivity : AppCompatActivity() {
         val db = DatabaseHandler(this)
 
         //test data
-//        db.addActivity(Activity("1/1/20","Bball","1:00pm",12.2,true,3,"kew","fun"))
-//        db.addActivity(Activity("1/3/20","Tennis","1:00pm",12.2,true,3,"kew","fun"))
-//        db.addActivity(Activity("1/4/20","Squash","1:00pm",12.2,true,3,"kew","fun"))
+//        db.addActivity(Activity("1/1/20","Bball","1:00pm",12.2,true,3,"kew","fun",null))
+//        db.addActivity(Activity("1/3/20","Tennis","1:00pm",12.2,true,3,"kew","fun",null))
+//        db.addActivity(Activity("1/4/20","Squash","1:00pm",12.2,true,3,"kew","fun",null))
         val activityList = db.viewActivity()
         Log.i("Testing DB", activityList.toString())
 

@@ -1,18 +1,19 @@
 package com.example.journeyfit_customapp
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-
+import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 
+
 //adapter class
-class ActivityAdapter(private val data: List<Activity>) : RecyclerView.Adapter<ActivityAdapter.ViewHolder>()  {
+class ActivityAdapter(private var data: List<Activity>) : RecyclerView.Adapter<ActivityAdapter.ViewHolder>()  {
     //on create function is called
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         //set layout inflater from main activity
@@ -23,13 +24,14 @@ class ActivityAdapter(private val data: List<Activity>) : RecyclerView.Adapter<A
         //return view
         return ViewHolder(view)
     }
+
     //get size of list
     override fun getItemCount() = data.size
     //add/remove data to list as the user scrolls
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = data[position]
         //run bind function
-        holder.bind(item)
+        holder.bind(item,position)
     }
 
     inner class ViewHolder(private val v: View) : RecyclerView.ViewHolder(v) {
@@ -41,7 +43,9 @@ class ActivityAdapter(private val data: List<Activity>) : RecyclerView.Adapter<A
         private val btnDelete = v.findViewById<Button>(R.id.buttonDelete)
 
         @SuppressLint("SetTextI18n")
-        fun bind(item: Activity) {
+        fun bind(item: Activity, pos: Int) {
+            val context = ViewHolder(v).itemView.context
+            val db= DatabaseHandler(ViewHolder(v).itemView.context)
             //set title
             textType.text = "Type: " + item.type
             //set subtitle
@@ -49,10 +53,15 @@ class ActivityAdapter(private val data: List<Activity>) : RecyclerView.Adapter<A
             textLoc.text = "Location: "+item.location
             //when clicked
             btnView.setOnClickListener{
-                Toast.makeText(ViewHolder(v).itemView.context, item.time, Toast.LENGTH_LONG).show()
+                val intent = Intent(context,AddActivity::class.java)
+                intent.putExtra("activity",item)
+                context.startActivity(intent)
             }
             btnDelete.setOnClickListener{
-                Toast.makeText(ViewHolder(v).itemView.context, item.comments,Toast.LENGTH_LONG).show()
+                Toast.makeText(context,"Activity Deleted",Toast.LENGTH_LONG).show()
+                db.deleteActivity(item)
+                data = db.viewActivity()
+                notifyDataSetChanged()
             }
         }
     }

@@ -13,22 +13,23 @@ class DatabaseHandler(context: Context): SQLiteOpenHelper(context,DATABASE_NAME,
     companion object {
         private const val DATABASE_VERSION = 1
         private const val DATABASE_NAME = "EmployeeDatabase"
-        private val TABLE_ACTIVITY = "ActivityTable"
-        private val KEY_DATE = "date"
-        private val KEY_TYPE = "type"
-        private val KEY_TIME = "time"
-        private val KEY_DIST = "distance"
-        private val KEY_FEEL = "feel"
-        private val KEY_LOCATON = "location"
-        private val KEY_COMMENTS = "comments"
+        private const val TABLE_ACTIVITY = "ActivityTable"
+        private const val KEY_DATE = "date"
+        private const val KEY_TYPE = "type"
+        private const val KEY_TIME = "time"
+        private const val KEY_DIST = "distance"
+        private const val KEY_FEEL = "feel"
+        private const val KEY_LOCATION = "location"
+        private const val KEY_COMMENTS = "comments"
+        private const val KEY_ID = "id"
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
         //creating table with fields
         val CREATE_ACTIVITY_TABLE = ("CREATE TABLE " + TABLE_ACTIVITY + "("
-                + "id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," + KEY_DATE + " TEXT,"
+                + KEY_ID +" INTEGER NOT NULL PRIMARY KEY," + KEY_DATE + " TEXT,"
                 + KEY_TYPE + " TEXT," + KEY_TIME + " TEXT," + KEY_DIST + " REAL,"
-                + KEY_FEEL + " INTEGER," + KEY_LOCATON + " TEXT,"
+                + KEY_FEEL + " INTEGER," + KEY_LOCATION + " TEXT,"
                 + KEY_COMMENTS + " TEXT" + ")")
         db?.execSQL(CREATE_ACTIVITY_TABLE)
     }
@@ -42,13 +43,14 @@ class DatabaseHandler(context: Context): SQLiteOpenHelper(context,DATABASE_NAME,
     fun addActivity(act: Activity):Long{
         val db = this.writableDatabase
         val contentValues = ContentValues()
-        contentValues.put(KEY_DATE, act.date.toString())
+        contentValues.put(KEY_DATE, act.date)
         contentValues.put(KEY_TYPE, act.type)
-        contentValues.put(KEY_TIME, act.time.toString())
+        contentValues.put(KEY_TIME, act.time)
         contentValues.put(KEY_DIST, act.distance)
         contentValues.put(KEY_FEEL, act.feel)
-        contentValues.put(KEY_LOCATON, act.location.toString())
+        contentValues.put(KEY_LOCATION, act.location)
         contentValues.put(KEY_COMMENTS, act.comments)
+        //contentValues.put(KEY_ID,act.id)
 
         // Inserting Row
         val success = db.insert(TABLE_ACTIVITY, null, contentValues)
@@ -76,6 +78,7 @@ class DatabaseHandler(context: Context): SQLiteOpenHelper(context,DATABASE_NAME,
         var aFeel: Int
         var aLoc: String
         var aCom: String
+        var aId: Int
         if (cursor.moveToFirst()) {
             do {
                 aDate = cursor.getString(cursor.getColumnIndex(KEY_DATE))
@@ -83,13 +86,42 @@ class DatabaseHandler(context: Context): SQLiteOpenHelper(context,DATABASE_NAME,
                 aTime = cursor.getString(cursor.getColumnIndex(KEY_TIME))
                 aDist = cursor.getDouble(cursor.getColumnIndex(KEY_DIST))
                 aFeel = cursor.getInt(cursor.getColumnIndex(KEY_FEEL))
-                aLoc = cursor.getString(cursor.getColumnIndex(KEY_LOCATON))
+                aLoc = cursor.getString(cursor.getColumnIndex(KEY_LOCATION))
                 aCom = cursor.getString(cursor.getColumnIndex(KEY_COMMENTS))
-                val act= Activity(aDate,aType,aTime,aDist,null,aFeel,aLoc,aCom)
+                aId = cursor.getInt(cursor.getColumnIndex(KEY_ID))
+                val act= Activity(aDate,aType,aTime,aDist,null,aFeel,aLoc,aCom,aId)
                 actList.add(act)
             } while (cursor.moveToNext())
         }
         return actList
+    }
+
+    //method to delete data
+    fun deleteActivity(act: Activity):Int{
+        val db = this.writableDatabase
+        val contentValues = ContentValues()
+        contentValues.put(KEY_ID, act.id) // EmpModelClass UserId
+        // Deleting Row
+        val success = db.delete(TABLE_ACTIVITY,"id="+act.id,null)
+        db.close() // Closing database connection
+        return success
+    }
+
+    //method to update data
+    fun updateActivity(act: Activity):Int{
+        val db = this.writableDatabase
+        val contentValues = ContentValues()
+        contentValues.put(KEY_DATE, act.date)
+        contentValues.put(KEY_TYPE, act.type)
+        contentValues.put(KEY_TIME, act.time)
+        contentValues.put(KEY_DIST, act.distance)
+        contentValues.put(KEY_FEEL, act.feel)
+        contentValues.put(KEY_LOCATION, act.location)
+        contentValues.put(KEY_COMMENTS, act.comments)
+        // Updating Row
+        val success = db.update(TABLE_ACTIVITY, contentValues,"id="+act.id,null)
+        db.close() // Closing database connection
+        return success
     }
 }
 

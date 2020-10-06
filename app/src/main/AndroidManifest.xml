@@ -17,6 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".AddActivity"/>
+        <activity android:name=".ViewActivity"/>
+        <activity android:name=".ScheduleActivity"/>
     </application>
 
 </manifest>

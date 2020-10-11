@@ -13,7 +13,7 @@ class DatabaseHandler(context: Context): SQLiteOpenHelper(context,DATABASE_NAME,
     companion object {
         private const val DATABASE_VERSION = 1
         private const val DATABASE_NAME = "EmployeeDatabase"
-        private const val TABLE_ACTIVITY = "ActivityTable"
+        const val TABLE_ACTIVITY = "ActivityTable"
         private const val KEY_DATE = "date"
         private const val KEY_TYPE = "type"
         private const val KEY_TIME = "time"
@@ -60,9 +60,9 @@ class DatabaseHandler(context: Context): SQLiteOpenHelper(context,DATABASE_NAME,
     }
 
     //method to read data
-    fun viewActivity():List<Activity>{
+    fun viewActivity(query:String):List<Activity>{
         val actList:ArrayList<Activity> = ArrayList<Activity>()
-        var selectQuery = "SELECT * FROM $TABLE_ACTIVITY"
+        var selectQuery = query
         val db = this.readableDatabase
         var cursor: Cursor? = null
         try{

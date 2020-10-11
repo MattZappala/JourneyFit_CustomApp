@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         //test data
         //testData(db)
 
-        val activityList = db.viewActivity()
+        val activityList = db.viewActivity("SELECT * FROM ${DatabaseHandler.TABLE_ACTIVITY} WHERE type = \"Basketball\"")
         Log.i("Testing DB", activityList.toString())
 
         imageAdd.setOnClickListener {

@@ -60,7 +60,7 @@ class ActivityAdapter(private var data: List<Activity>) : RecyclerView.Adapter<A
             btnDelete.setOnClickListener{
                 Toast.makeText(context,"Activity Deleted",Toast.LENGTH_LONG).show()
                 db.deleteActivity(item)
-                data = db.viewActivity()
+                data = db.viewActivity("SELECT * FROM ${DatabaseHandler.TABLE_ACTIVITY}")
                 notifyDataSetChanged()
             }
         }

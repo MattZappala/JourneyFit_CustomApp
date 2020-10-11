@@ -24,7 +24,9 @@ class ViewActivity : AppCompatActivity() {
     lateinit var db: DatabaseHandler
     var typesList = mutableListOf<String>( "No Filter")
     var locList = mutableListOf<String>( "No Filter")
-    lateinit var spinnerValue: String
+    var spinnerValueType: String = "No Filter"
+    var spinnerValueLoc: String = "No Filter"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.view_activity_list)
@@ -58,8 +60,8 @@ class ViewActivity : AppCompatActivity() {
                 AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>,
                                             view: View, position: Int, id: Long) {
-                    spinnerValue = typesList[position]
-
+                    spinnerValueType = typesList[position]
+                    setView()
                 }
                 override fun onNothingSelected(parent: AdapterView<*>) {
                     // write code to perform some action
@@ -75,7 +77,8 @@ class ViewActivity : AppCompatActivity() {
                 AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>,
                                             view: View, position: Int, id: Long) {
-                    spinnerValue = locList[position]
+                    spinnerValueLoc = locList[position]
+                    setView()
                 }
                 override fun onNothingSelected(parent: AdapterView<*>) {
                     // write code to perform some action
@@ -85,7 +88,13 @@ class ViewActivity : AppCompatActivity() {
     }
 
     private fun setView(){
-        activityList = db.viewActivity()
+        var query = "SELECT * FROM ${DatabaseHandler.TABLE_ACTIVITY}"
+        when {
+            spinnerValueType != "No Filter" && spinnerValueLoc == "No Filter" -> query += " WHERE type = \"$spinnerValueType\""
+            spinnerValueLoc != "No Filter" && spinnerValueType == "No Filter" -> query += " WHERE location = \"$spinnerValueLoc\""
+            spinnerValueType != "No Filter" && spinnerValueLoc != "No Filter" -> query += " WHERE type = \"$spinnerValueType\" AND location = \"$spinnerValueLoc\""
+        }
+        activityList = db.viewActivity(query)
         adapter = ActivityAdapter(activityList)
         list.adapter = adapter
     }

@@ -47,10 +47,10 @@ class ActivityAdapter(private var data: List<Activity>) : RecyclerView.Adapter<A
             val context = ViewHolder(v).itemView.context
             val db= DatabaseHandler(ViewHolder(v).itemView.context)
             //set title
-            textType.text = "Type: " + item.type
+            textType.text = item.type
             //set subtitle
-            textDate.text = "Date: "+item.date
-            textLoc.text = "Location: "+item.location
+            textDate.text = item.date
+            textLoc.text = item.location
             //when clicked
             btnView.setOnClickListener{
                 val intent = Intent(context,AddActivity::class.java)

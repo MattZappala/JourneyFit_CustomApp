@@ -2,11 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:baselineAligned="false">
 
     <LinearLayout
-        android:layout_width="225dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
         android:layout_weight="1"
         android:orientation="vertical">
 
@@ -18,30 +20,28 @@
 
         <TextView
             android:id="@+id/textDate"
-            android:layout_width="match_parent"
+            android:layout_width="120sp"
             android:layout_height="wrap_content"
             android:text="@string/text_date_01_01_20" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/textLocation"
-        android:layout_width="184dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_width="120sp"
+        android:layout_height="wrap_content"
+        android:gravity="top"
         android:text="@string/text_location" />
 
     <Button
         android:id="@+id/buttonView"
-        android:layout_width="154sp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:text="View" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_view" />
 
     <Button
         android:id="@+id/buttonDelete"
-        android:layout_width="153sp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:text="DELETE" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_delete" />
 
 </LinearLayout>

@@ -26,4 +26,6 @@
     <string name="text_01_01_20">01/01/20</string>
     <string name="text_notification">Notification</string>
     <string name="text_schedule">schedule</string>
+    <string name="text_view">View</string>
+    <string name="text_delete">DELETE</string>
 </resources>

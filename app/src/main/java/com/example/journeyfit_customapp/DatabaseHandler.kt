@@ -62,7 +62,7 @@ class DatabaseHandler(context: Context): SQLiteOpenHelper(context,DATABASE_NAME,
     //method to read data
     fun viewActivity():List<Activity>{
         val actList:ArrayList<Activity> = ArrayList<Activity>()
-        val selectQuery = "SELECT  * FROM $TABLE_ACTIVITY"
+        var selectQuery = "SELECT * FROM $TABLE_ACTIVITY"
         val db = this.readableDatabase
         var cursor: Cursor? = null
         try{
@@ -91,6 +91,27 @@ class DatabaseHandler(context: Context): SQLiteOpenHelper(context,DATABASE_NAME,
                 aId = cursor.getInt(cursor.getColumnIndex(KEY_ID))
                 val act= Activity(aDate,aType,aTime,aDist,null,aFeel,aLoc,aCom,aId)
                 actList.add(act)
+            } while (cursor.moveToNext())
+        }
+        return actList
+    }
+
+    fun viewSet(key:String):List<String>{
+        val actList:ArrayList<String> = ArrayList<String>()
+        val selectQuery = "SELECT DISTINCT $key FROM $TABLE_ACTIVITY"
+        val db = this.readableDatabase
+        var cursor: Cursor? = null
+        try{
+            cursor = db.rawQuery(selectQuery, null)
+        }catch (e: SQLiteException) {
+            db.execSQL(selectQuery)
+            return ArrayList()
+        }
+        var value: String
+        if (cursor.moveToFirst()) {
+            do {
+                value = cursor.getString(cursor.getColumnIndex(key))
+                actList.add(value)
             } while (cursor.moveToNext())
         }
         return actList

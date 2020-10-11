@@ -16,11 +16,9 @@ class MainActivity : AppCompatActivity() {
         val imageSchedule = findViewById<ImageView>(R.id.imageSchedule)
 
         val db = DatabaseHandler(this)
-
         //test data
-//        db.addActivity(Activity("1/1/20","Bball","1:00pm",12.2,true,3,"kew","fun",null))
-//        db.addActivity(Activity("1/3/20","Tennis","1:00pm",12.2,true,3,"kew","fun",null))
-//        db.addActivity(Activity("1/4/20","Squash","1:00pm",12.2,true,3,"kew","fun",null))
+        //testData(db)
+
         val activityList = db.viewActivity()
         Log.i("Testing DB", activityList.toString())
 
@@ -38,5 +36,12 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this,ScheduleActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    private fun testData(db: DatabaseHandler) {
+        db.addActivity(Activity("1/10/20","Basketball","1:00pm",11.0,true,3,"kew","fun",null))
+        db.addActivity(Activity("2/10/20","Tennis","2:30pm",24.5,true,4,"East kew","Very fun",null))
+        db.addActivity(Activity("3/10/20","Squash","12:00pm",12.2,true,5,"Hawthorne","Good times",null))
+        db.addActivity(Activity("5/10/20","Squash","11:00am",1.2,true,1,"Hawthorne East","Times",null))
     }
 }

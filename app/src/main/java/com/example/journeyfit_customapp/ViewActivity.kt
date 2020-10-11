@@ -7,14 +7,8 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.selection.ItemKeyProvider
-import androidx.recyclerview.selection.ItemKeyProvider.SCOPE_MAPPED
-import androidx.recyclerview.selection.SelectionPredicates
-import androidx.recyclerview.selection.SelectionTracker
-import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.individual_activity.*
 
 class ViewActivity : AppCompatActivity() {
     private lateinit var adapter: ActivityAdapter

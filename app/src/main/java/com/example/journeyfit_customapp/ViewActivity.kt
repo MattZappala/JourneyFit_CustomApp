@@ -14,13 +14,14 @@ class ViewActivity : AppCompatActivity() {
     private lateinit var adapter: ActivityAdapter
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var activityList: List<Activity>
-    lateinit var list: RecyclerView
-    lateinit var db: DatabaseHandler
+    private lateinit var list: RecyclerView
+    private lateinit var db: DatabaseHandler
     var typesList = mutableListOf<String>( "No Filter")
     var locList = mutableListOf<String>( "No Filter")
     var spinnerValueType: String = "No Filter"
     var spinnerValueLoc: String = "No Filter"
 
+    @ExperimentalStdlibApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.view_activity_list)
@@ -34,17 +35,7 @@ class ViewActivity : AppCompatActivity() {
         db = DatabaseHandler(this)
         setView()
 
-        val dbTypesList = db.viewSet("type")
-        Log.i("Testing", typesList.toString())
-        dbTypesList.forEach {
-                typesList.add(it)
-        }
-
-        val dbLocList = db.viewSet("location")
-        Log.i("Testing", typesList.toString())
-        dbLocList.forEach {
-            locList.add(it)
-        }
+        getLists()
 
         if (spinnerType != null) {
             val adapter = ArrayAdapter(this,
@@ -93,9 +84,33 @@ class ViewActivity : AppCompatActivity() {
         list.adapter = adapter
     }
 
+
+    @ExperimentalStdlibApi
+    private fun getLists(){
+        while (typesList.size > 1) {
+            typesList.removeLast()
+        }
+        val dbTypesList = db.viewSet("type")
+        Log.i("Testing", typesList.toString())
+        dbTypesList.forEach {
+            typesList.add(it)
+        }
+
+        while (locList.size > 1) {
+            locList.removeLast()
+        }
+        val dbLocList = db.viewSet("location")
+        Log.i("Testing", locList.toString())
+        dbLocList.forEach {
+            locList.add(it)
+        }
+    }
+
+    @ExperimentalStdlibApi
     override fun onResume() {
         super.onResume()
         Log.i("Testing", "resume")
         setView()
+        getLists()
     }
 }

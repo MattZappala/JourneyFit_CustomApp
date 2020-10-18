@@ -1,12 +1,20 @@
 package com.example.journeyfit_customapp
 
 import android.annotation.SuppressLint
-import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import java.text.SimpleDateFormat
+import java.time.DateTimeException
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeParseException
+import java.util.*
 
 //Spinner: https://developer.android.com/guide/topics/ui/controls/spinner
 
@@ -15,7 +23,17 @@ class AddActivity : AppCompatActivity(){
     lateinit var spinnerValue: String
     lateinit var vActivity: Activity
     var activityId: Int? = null
+    lateinit var dateInput: EditText
+    lateinit var timeInput: EditText
+    lateinit var distInput: EditText
+    lateinit var feelInput: SeekBar
+    lateinit var locInput: EditText
+    lateinit var comInput: EditText
+    lateinit var otherInput: EditText
+    @RequiresApi(Build.VERSION_CODES.O)
+    val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yy")
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,16 +41,20 @@ class AddActivity : AppCompatActivity(){
 
         val db = DatabaseHandler(this)
 
-        val dateInput = findViewById<EditText>(R.id.editDate)
-        val timeInput = findViewById<EditText>(R.id.editTime)
-        val distInput = findViewById<EditText>(R.id.editDistance)
-        val feelInput = findViewById<SeekBar>(R.id.seekBarFeel)
-        val locInput = findViewById<EditText>(R.id.editLocation)
-        val comInput = findViewById<EditText>(R.id.editComments)
-        val otherInput = findViewById<EditText>(R.id.editOtherActivityInput)
+        dateInput = findViewById<EditText>(R.id.editDate)
+        timeInput = findViewById<EditText>(R.id.editTime)
+        distInput = findViewById<EditText>(R.id.editDistance)
+        feelInput = findViewById<SeekBar>(R.id.seekBarFeel)
+        locInput = findViewById<EditText>(R.id.editLocation)
+        comInput = findViewById<EditText>(R.id.editComments)
+        otherInput = findViewById<EditText>(R.id.editOtherActivityInput)
         val btnSubmit = findViewById<Button>(R.id.buttonSubmit)
         // access the spinner
         val spinner = findViewById<Spinner>(R.id.spinner)
+
+
+        val currentDate = LocalDateTime.now()
+        dateInput.hint = currentDate.format(formatter)
 
         val typesList = db.viewSet("type")
         Log.i("Testing", typesList.toString())
@@ -53,7 +75,7 @@ class AddActivity : AppCompatActivity(){
             type = vActivity.type
             Log.i("Testing",type)
             timeInput.setText(vActivity.time)
-            distInput.setText(vActivity.distance.toString()) //TODO: change distance text to double not int
+            distInput.setText(vActivity.distance.toString())
             feelInput.progress = vActivity.feel
             locInput.setText(vActivity.location)
             comInput.setText(vActivity.comments)
@@ -85,47 +107,85 @@ class AddActivity : AppCompatActivity(){
         }
 
         btnSubmit.setOnClickListener {
+            var error = checkErrors()
             val type = if(otherInput.isEnabled){
                 otherInput.text.toString()
             }else{
                 spinnerValue
             }
-            if(btnSubmit.text == "Submit") {
-                db.addActivity(
-                    Activity(
-                        dateInput.text.toString(),
-                        type,
-                        timeInput.text.toString(),
-                        distInput.text.toString().toDouble(),
-                        true,
-                        feelInput.progress,
-                        locInput.text.toString(),
-                        comInput.text.toString(),
-                        null
-                    )
-                )
+            val dist = if(distInput.text.toString() != ""){
+                distInput.text.toString()
             } else {
-                val result = db.updateActivity(
-                    Activity(
-                        dateInput.text.toString(),
-                        type,
-                        timeInput.text.toString(),
-                        distInput.text.toString().toDouble(),
-                        true,
-                        feelInput.progress,
-                        locInput.text.toString(),
-                        comInput.text.toString(),
-                        vActivity.id
-                    )
-                )
-                val stringRes = if (result == 1){
-                    "Update Successful"
-                } else  {
-                    "Update Failed"
-                }
-                Toast.makeText(this,stringRes,Toast.LENGTH_LONG).show()
+                "0.0"
             }
-            finish()
+            val date = if(dateInput.text.toString() != ""){
+                distInput.text.toString()
+            } else {
+                dateInput.hint.toString()
+            }
+            if (!error) {
+                if(btnSubmit.text == "Submit") {
+                    db.addActivity(
+                        Activity(
+                            date,
+                            type,
+                            timeInput.text.toString(),
+                            dist.toDouble(),
+                            true,
+                            feelInput.progress,
+                            locInput.text.toString(),
+                            comInput.text.toString(),
+                            null
+                        )
+                    )
+                } else {
+                    val result = db.updateActivity(
+                        Activity(
+                            date,
+                            type,
+                            timeInput.text.toString(),
+                            dist.toDouble(),
+                            true,
+                            feelInput.progress,
+                            locInput.text.toString(),
+                            comInput.text.toString(),
+                            vActivity.id
+                        )
+                    )
+                    val stringRes = if (result == 1){
+                        "Update Successful"
+                    } else  {
+                        "Update Failed"
+                    }
+                    Toast.makeText(this,stringRes,Toast.LENGTH_LONG).show()
+                }
+                    finish()
+            }
         }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun checkErrors(): Boolean {
+        var error = false
+        try{
+            if(dateInput.text.toString() != ""){
+                if(LocalDate.parse(dateInput.text,formatter) > LocalDate.now()){
+                    dateInput.error = "Input current or past date"
+                    error = true
+                }
+            } else {
+                LocalDate.parse(dateInput.hint,formatter).toString()
+                if(LocalDate.parse(dateInput.hint,formatter) > LocalDate.now()){
+                    dateInput.error = "Input current or past date"
+                    error = true
+                }
+            }
+        } catch (e: DateTimeException){
+            Log.i("Testing", "DateTimeException Thrown")
+            dateInput.error = "Must be in format DD-MM-YY"
+            error = true
+        }
+        timeInput.error
+        return error
     }
 }

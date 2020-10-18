@@ -8,13 +8,10 @@ import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import java.text.SimpleDateFormat
 import java.time.DateTimeException
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.time.format.DateTimeParseException
-import java.util.*
 
 //Spinner: https://developer.android.com/guide/topics/ui/controls/spinner
 
@@ -107,8 +104,8 @@ class AddActivity : AppCompatActivity(){
         }
 
         btnSubmit.setOnClickListener {
-            var error = checkErrors()
-            val type = if(otherInput.isEnabled){
+            val error = checkErrors()
+            val mtype = if(otherInput.isEnabled){
                 otherInput.text.toString()
             }else{
                 spinnerValue
@@ -128,7 +125,7 @@ class AddActivity : AppCompatActivity(){
                     db.addActivity(
                         Activity(
                             date,
-                            type,
+                            mtype,
                             timeInput.text.toString(),
                             dist.toDouble(),
                             true,
@@ -142,7 +139,7 @@ class AddActivity : AppCompatActivity(){
                     val result = db.updateActivity(
                         Activity(
                             date,
-                            type,
+                            mtype,
                             timeInput.text.toString(),
                             dist.toDouble(),
                             true,

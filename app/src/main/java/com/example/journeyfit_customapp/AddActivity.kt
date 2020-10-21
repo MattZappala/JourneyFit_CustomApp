@@ -104,8 +104,7 @@ class AddActivity : AppCompatActivity(){
         }
 
         btnSubmit.setOnClickListener {
-            val error = checkErrors()
-            val mtype = if(otherInput.isEnabled){
+            val mType = if(otherInput.isEnabled){
                 otherInput.text.toString()
             }else{
                 spinnerValue
@@ -120,12 +119,12 @@ class AddActivity : AppCompatActivity(){
             } else {
                 dateInput.hint.toString()
             }
-            if (!error) {
+            if (!checkErrors()) {
                 if(btnSubmit.text == "Submit") {
                     db.addActivity(
                         Activity(
                             date,
-                            mtype,
+                            mType,
                             timeInput.text.toString(),
                             dist.toDouble(),
                             true,
@@ -139,7 +138,7 @@ class AddActivity : AppCompatActivity(){
                     val result = db.updateActivity(
                         Activity(
                             date,
-                            mtype,
+                            mType,
                             timeInput.text.toString(),
                             dist.toDouble(),
                             true,
@@ -182,7 +181,11 @@ class AddActivity : AppCompatActivity(){
             dateInput.error = "Must be in format DD-MM-YY"
             error = true
         }
-        timeInput.error
+        val regex = "^([0-9]*):[0-5][0-9]$".toRegex()
+        if (!timeInput.text.toString().matches(regex)) {
+            timeInput.error = "Please time spent as HH:MM e.g. 1 hour and 30 mins = 1:30"
+            error = true
+        }
         return error
     }
 }

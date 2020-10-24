@@ -12,7 +12,8 @@ data class Activity(
     var metric: Boolean?,
     var feel: Int,
     var location: String?,
-    var comments: String?,
-    var id: Int?
+    var comments: String,
+    var id: Int?,
+    var status: Int
 ) : Parcelable {
 }

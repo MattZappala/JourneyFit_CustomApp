@@ -12,7 +12,7 @@ import android.database.sqlite.SQLiteOpenHelper
 class DatabaseHandler(context: Context): SQLiteOpenHelper(context,DATABASE_NAME,null,DATABASE_VERSION) {
     companion object {
         private const val DATABASE_VERSION = 1
-        private const val DATABASE_NAME = "EmployeeDatabase"
+        private const val DATABASE_NAME = "ActDatabase"
         const val TABLE_ACTIVITY = "ActivityTable"
         private const val KEY_DATE = "date"
         private const val KEY_TYPE = "type"
@@ -22,6 +22,7 @@ class DatabaseHandler(context: Context): SQLiteOpenHelper(context,DATABASE_NAME,
         private const val KEY_LOCATION = "location"
         private const val KEY_COMMENTS = "comments"
         private const val KEY_ID = "id"
+        private const val KEY_STATUS = "status"
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
@@ -30,7 +31,7 @@ class DatabaseHandler(context: Context): SQLiteOpenHelper(context,DATABASE_NAME,
                 + KEY_ID +" INTEGER NOT NULL PRIMARY KEY," + KEY_DATE + " TEXT,"
                 + KEY_TYPE + " TEXT," + KEY_TIME + " TEXT," + KEY_DIST + " REAL,"
                 + KEY_FEEL + " INTEGER," + KEY_LOCATION + " TEXT,"
-                + KEY_COMMENTS + " TEXT" + ")")
+                + KEY_COMMENTS + " TEXT," + KEY_STATUS+ " INTEGER" +")")
         db?.execSQL(CREATE_ACTIVITY_TABLE)
     }
 
@@ -50,6 +51,7 @@ class DatabaseHandler(context: Context): SQLiteOpenHelper(context,DATABASE_NAME,
         contentValues.put(KEY_FEEL, act.feel)
         contentValues.put(KEY_LOCATION, act.location)
         contentValues.put(KEY_COMMENTS, act.comments)
+        contentValues.put(KEY_STATUS, act.status)
         //contentValues.put(KEY_ID,act.id)
 
         // Inserting Row
@@ -79,6 +81,7 @@ class DatabaseHandler(context: Context): SQLiteOpenHelper(context,DATABASE_NAME,
         var aLoc: String
         var aCom: String
         var aId: Int
+        var aStatus: Int
         if (cursor.moveToFirst()) {
             do {
                 aDate = cursor.getString(cursor.getColumnIndex(KEY_DATE))
@@ -89,7 +92,8 @@ class DatabaseHandler(context: Context): SQLiteOpenHelper(context,DATABASE_NAME,
                 aLoc = cursor.getString(cursor.getColumnIndex(KEY_LOCATION))
                 aCom = cursor.getString(cursor.getColumnIndex(KEY_COMMENTS))
                 aId = cursor.getInt(cursor.getColumnIndex(KEY_ID))
-                val act= Activity(aDate,aType,aTime,aDist,null,aFeel,aLoc,aCom,aId)
+                aStatus = cursor.getInt(cursor.getColumnIndex(KEY_STATUS))
+                val act= Activity(aDate,aType,aTime,aDist,null,aFeel,aLoc,aCom,aId,aStatus)
                 actList.add(act)
             } while (cursor.moveToNext())
         }
@@ -139,6 +143,7 @@ class DatabaseHandler(context: Context): SQLiteOpenHelper(context,DATABASE_NAME,
         contentValues.put(KEY_FEEL, act.feel)
         contentValues.put(KEY_LOCATION, act.location)
         contentValues.put(KEY_COMMENTS, act.comments)
+        contentValues.put(KEY_STATUS, act.status)
         // Updating Row
         val success = db.update(TABLE_ACTIVITY, contentValues,"id="+act.id,null)
         db.close() // Closing database connection

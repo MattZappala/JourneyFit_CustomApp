@@ -17,10 +17,10 @@ class MainActivity : AppCompatActivity() {
 
         val db = DatabaseHandler(this)
         //test data
-        //testData(db)
+        testData(db)
 
-        val activityList = db.viewActivity("SELECT * FROM ${DatabaseHandler.TABLE_ACTIVITY} WHERE type = \"Basketball\"")
-        Log.i("Testing DB", activityList.toString())
+       // val activityList = db.viewActivity("SELECT * FROM ${DatabaseHandler.TABLE_ACTIVITY} WHERE type = \"Basketball\"")
+        //Log.i("Testing DB", activityList.toString())
 
         imageAdd.setOnClickListener {
             val intent = Intent(this,AddActivity::class.java)
@@ -39,9 +39,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun testData(db: DatabaseHandler) {
-        db.addActivity(Activity("1/10/20","Basketball","1:00pm",11.0,true,3,"kew","fun",null))
-        db.addActivity(Activity("2/10/20","Tennis","2:30pm",24.5,true,4,"East kew","Very fun",null))
-        db.addActivity(Activity("3/10/20","Squash","12:00pm",12.2,true,5,"Hawthorne","Good times",null))
-        db.addActivity(Activity("5/10/20","Squash","11:00am",1.2,true,1,"Hawthorne East","Times",null))
+        db.addActivity(Activity("1/10/20","Basketball","1:00pm",11.0,true,3,"kew","fun",null,1))
+        db.addActivity(Activity("2/10/20","Tennis","2:30pm",24.5,true,4,"East kew","Very fun",null,1))
+        db.addActivity(Activity("3/10/20","Squash","12:00pm",12.2,true,5,"Hawthorne","Good times",null,1))
+        db.addActivity(Activity("5/10/20","Squash","11:00am",1.2,true,1,"Hawthorne East","Times",null,1))
     }
 }

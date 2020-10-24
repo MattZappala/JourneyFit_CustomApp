@@ -2,6 +2,7 @@ package com.example.journeyfit_customapp
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 
+//To get colours from https://www.schemecolor.com/sample?getcolor=00C44F
 
 //adapter class
 class ActivityAdapter(private var data: List<Activity>) : RecyclerView.Adapter<ActivityAdapter.ViewHolder>()  {
@@ -46,6 +48,11 @@ class ActivityAdapter(private var data: List<Activity>) : RecyclerView.Adapter<A
         fun bind(item: Activity, pos: Int) {
             val context = ViewHolder(v).itemView.context
             val db= DatabaseHandler(ViewHolder(v).itemView.context)
+            if(item.status == 1){
+                v.setBackgroundColor(Color.rgb(0, 196, 79))
+            } else {
+                v.setBackgroundColor(Color.rgb(224, 105, 105))
+            }
             //set title
             textType.text = item.type
             //set subtitle

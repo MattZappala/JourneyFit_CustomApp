@@ -131,7 +131,8 @@ class AddActivity : AppCompatActivity(){
                             feelInput.progress,
                             locInput.text.toString(),
                             comInput.text.toString(),
-                            null
+                            null,
+                            1
                         )
                     )
                 } else {
@@ -145,7 +146,8 @@ class AddActivity : AppCompatActivity(){
                             feelInput.progress,
                             locInput.text.toString(),
                             comInput.text.toString(),
-                            vActivity.id
+                            vActivity.id,
+                            1
                         )
                     )
                     val stringRes = if (result == 1){

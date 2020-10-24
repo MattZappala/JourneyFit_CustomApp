@@ -48,9 +48,7 @@ class ActivityAdapter(private var data: List<Activity>) : RecyclerView.Adapter<A
         fun bind(item: Activity, pos: Int) {
             val context = ViewHolder(v).itemView.context
             val db= DatabaseHandler(ViewHolder(v).itemView.context)
-            if(item.status == 1){
-                v.setBackgroundColor(Color.rgb(0, 196, 79))
-            } else {
+            if(item.status == 0){
                 v.setBackgroundColor(Color.rgb(224, 105, 105))
             }
             //set title

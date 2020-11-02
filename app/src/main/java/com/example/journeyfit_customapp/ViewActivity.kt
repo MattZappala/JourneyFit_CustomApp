@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
 
-class ViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class ViewActivity : AppCompatActivity() {
     private lateinit var adapter: ActivityAdapter
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var activityList: List<Activity>
@@ -114,9 +114,5 @@ class ViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         Log.i("Testing", "resume")
         setView()
         getLists()
-    }
-
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        TODO("Not yet implemented")
     }
 }

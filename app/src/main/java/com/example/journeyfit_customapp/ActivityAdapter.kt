@@ -50,9 +50,9 @@ class ActivityAdapter(private var data: List<Activity>) : RecyclerView.Adapter<A
             db= DatabaseHandler(context)
             mItem = item
             if(item.status == 0){
-                v.setBackgroundColor(Color.rgb(224, 105, 105))
+               v.setBackgroundResource(R.drawable.list_red)
             } else {
-                v.setBackgroundColor(Color.rgb(182, 252, 213))
+               v.setBackgroundResource(R.drawable.list_green)
             }
             //set title
             textType.text = item.type
@@ -62,19 +62,6 @@ class ActivityAdapter(private var data: List<Activity>) : RecyclerView.Adapter<A
             textFeel.text = "Rating: "+ item.feel
             //when clicked
             v.setOnCreateContextMenuListener(this)
-//            btnView.setOnClickListener{
-//                val intent = Intent(context,AddActivity::class.java)
-//                intent.putExtra("activity",item)
-//                context.startActivity(intent)
-//            }
-//            btnDelete.setOnClickListener{
-//                Log.i("Testing", "Delete")
-//                Toast.makeText(ViewHolder(v).itemView.context,"Activity Deleted",Toast.LENGTH_LONG).show()
-//                db.deleteActivity(mItem)
-//                data = db.viewActivity("SELECT * FROM ${DatabaseHandler.TABLE_ACTIVITY}")
-//                Log.i("Testing",data.toString())
-//                notifyDataSetChanged()
-//            }
         }
 
         override fun onCreateContextMenu(

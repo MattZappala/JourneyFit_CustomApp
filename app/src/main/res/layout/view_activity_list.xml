@@ -21,6 +21,7 @@
     <Spinner
         android:id="@+id/filter1"
         android:layout_width="224dp"
+        android:background="@drawable/text_ui"
         android:layout_height="26dp"
         android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -29,6 +30,7 @@
 
     <Spinner
         android:id="@+id/filter2"
+        android:background="@drawable/text_ui"
         android:layout_width="224dp"
         android:layout_height="26dp"
         android:layout_marginTop="24dp"

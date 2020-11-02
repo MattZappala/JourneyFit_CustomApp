@@ -17,7 +17,7 @@ import java.time.format.DateTimeFormatter
 
 //Spinner: https://developer.android.com/guide/topics/ui/controls/spinner
 
-class AddActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener{
+class AddActivity : AppCompatActivity(){
     var activitiesList = mutableListOf<String>( "Running", "Walking", "Basketball", "Tennis")
     lateinit var spinnerValue: String
     lateinit var vActivity: Activity
@@ -192,9 +192,5 @@ class AddActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelected
             error = true
         }
         return error
-    }
-
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        TODO("Not yet implemented")
     }
 }

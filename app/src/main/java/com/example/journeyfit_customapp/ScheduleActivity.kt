@@ -16,7 +16,7 @@ import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-class ScheduleActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class ScheduleActivity : AppCompatActivity() {
     private lateinit var db: DatabaseHandler
     private lateinit var timeInput: EditText
     private lateinit var dateInput: CalendarView
@@ -114,9 +114,5 @@ class ScheduleActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             error = true
         }
         return error
-    }
-
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        TODO("Not yet implemented")
     }
 }

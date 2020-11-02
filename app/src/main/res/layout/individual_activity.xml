@@ -21,6 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12sp"
+        android:paddingLeft="10dp"
         android:ems="10"
         android:inputType="date"
         android:hint="@string/text_date"
@@ -28,7 +29,8 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textTitleAdd"
-        android:autofillHints="" />
+        android:autofillHints=""
+        android:background="@drawable/text_ui"/>
 
     <Spinner
         android:id="@+id/spinner"
@@ -37,13 +39,15 @@
         android:layout_marginTop="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editDate" />
+        app:layout_constraintTop_toBottomOf="@+id/editDate"
+        android:background="@drawable/text_ui"/>
 
     <EditText
         android:id="@+id/editOtherActivityInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12sp"
+        android:paddingLeft="10dp"
         android:ems="10"
         android:hint="@string/text_other"
         android:importantForAutofill="no"
@@ -51,12 +55,15 @@
         android:maxLength="10"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner"
+        android:background="@drawable/text_ui"
+        />
 
     <EditText
         android:id="@+id/editTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
         android:layout_marginTop="12sp"
         android:ems="10"
         android:importantForAutofill="no"
@@ -64,17 +71,20 @@
         android:hint="@string/text_time"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/text_ui"
         app:layout_constraintTop_toBottomOf="@+id/editOtherActivityInput" />
 
     <EditText
         android:id="@+id/editDistance"
         android:layout_width="120dp"
+        android:paddingLeft="10dp"
         android:layout_height="42dp"
         android:layout_marginTop="12sp"
         android:ems="10"
         android:hint="@string/text_1_0"
         android:importantForAutofill="no"
         android:inputType="numberDecimal"
+        android:background="@drawable/text_ui"
         app:layout_constraintStart_toStartOf="@+id/editTime"
         app:layout_constraintTop_toBottomOf="@+id/editTime" />
 
@@ -114,9 +124,11 @@
         android:layout_marginTop="12sp"
         android:ems="10"
         android:hint="@string/text_location"
+        android:paddingLeft="10dp"
         android:importantForAutofill="no"
         android:inputType="textPersonName"
         android:maxLength="13"
+        android:background="@drawable/text_ui"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
@@ -128,9 +140,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12sp"
         android:ems="10"
+        android:background="@drawable/text_ui"
         android:gravity="start|top"
         android:hint="@string/text_comments"
         android:importantForAutofill="no"
+        android:paddingLeft="10dp"
         android:inputType="textMultiLine"
         android:maxLength="30"
         android:maxLines="1"
@@ -142,6 +156,7 @@
     <Button
         android:id="@+id/buttonSubmit"
         android:layout_width="wrap_content"
+        android:background="@drawable/text_ui"
         android:layout_height="wrap_content"
         android:layout_marginTop="12sp"
         android:text="@string/text_submit"

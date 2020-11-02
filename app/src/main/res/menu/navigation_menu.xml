@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/main"
+        android:icon="@drawable/baseline_home_black_48dp"
+        android:title="Main Page"/>
+    <item android:id="@+id/add_activity"
+        android:icon="@drawable/baseline_add_box_black_48dp"
+        android:title="Add Activity"/>
+    <item android:id="@+id/list"
+        android:icon="@drawable/baseline_list_alt_black_48dp"
+        android:title="View Activities"/>
+    <item android:id="@+id/schedule"
+        android:icon="@drawable/baseline_event_black_48dp"
+        android:title="Schedule Activity"/>
+</menu>

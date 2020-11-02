@@ -4,17 +4,19 @@ import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.navigation.NavigationView
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-class ScheduleActivity : AppCompatActivity() {
+class ScheduleActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var db: DatabaseHandler
     private lateinit var timeInput: EditText
     private lateinit var dateInput: CalendarView
@@ -112,5 +114,9 @@ class ScheduleActivity : AppCompatActivity() {
             error = true
         }
         return error
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        TODO("Not yet implemented")
     }
 }

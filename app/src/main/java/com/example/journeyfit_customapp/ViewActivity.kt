@@ -2,6 +2,7 @@ package com.example.journeyfit_customapp
 
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -9,8 +10,9 @@ import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.navigation.NavigationView
 
-class ViewActivity : AppCompatActivity() {
+class ViewActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var adapter: ActivityAdapter
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var activityList: List<Activity>
@@ -112,5 +114,9 @@ class ViewActivity : AppCompatActivity() {
         Log.i("Testing", "resume")
         setView()
         getLists()
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        TODO("Not yet implemented")
     }
 }

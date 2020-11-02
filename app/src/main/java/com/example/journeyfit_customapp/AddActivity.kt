@@ -4,10 +4,12 @@ import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.navigation.NavigationView
 import java.time.DateTimeException
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -15,7 +17,7 @@ import java.time.format.DateTimeFormatter
 
 //Spinner: https://developer.android.com/guide/topics/ui/controls/spinner
 
-class AddActivity : AppCompatActivity(){
+class AddActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener{
     var activitiesList = mutableListOf<String>( "Running", "Walking", "Basketball", "Tennis")
     lateinit var spinnerValue: String
     lateinit var vActivity: Activity
@@ -115,7 +117,7 @@ class AddActivity : AppCompatActivity(){
                 "0.0"
             }
             val date = if(dateInput.text.toString() != ""){
-                distInput.text.toString()
+                dateInput.text.toString()
             } else {
                 dateInput.hint.toString()
             }
@@ -150,6 +152,7 @@ class AddActivity : AppCompatActivity(){
                             1
                         )
                     )
+                    Log.i("Testing",Activity(date, mType,timeInput.text.toString(),dist.toDouble(),true, feelInput.progress,locInput.text.toString(), comInput.text.toString(), vActivity.id,1).toString())
                     val stringRes = if (result == 1){
                         "Update Successful"
                     } else  {
@@ -157,7 +160,7 @@ class AddActivity : AppCompatActivity(){
                     }
                     Toast.makeText(this,stringRes,Toast.LENGTH_LONG).show()
                 }
-                    finish()
+                finish()
             }
         }
     }
@@ -189,5 +192,9 @@ class AddActivity : AppCompatActivity(){
             error = true
         }
         return error
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        TODO("Not yet implemented")
     }
 }

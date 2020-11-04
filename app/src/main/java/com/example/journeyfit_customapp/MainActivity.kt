@@ -27,32 +27,35 @@ class MainActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSelec
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        //set up support for navigation drawer
         setSupportActionBar(toolbar)
-
+        //set up nav drawer
         drawer = findViewById(R.id.drawer_layout)
-
+        //set up toggle button in top left to open and close drawer
         toggle = ActionBarDrawerToggle(this, drawer, toolbar, R.string.open, R.string.close)
         drawer.addDrawerListener(toggle)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
 
         val navigationView: NavigationView = findViewById(R.id.nav)
+        //add nav listener
         navigationView.setNavigationItemSelectedListener(this)
 
+        //setup image widgets
         val imageAdd = findViewById<ImageView>(R.id.imageAdd)
         val imageList = findViewById<ImageView>(R.id.imageList)
         val imageSchedule = findViewById<ImageView>(R.id.imageSchedule)
 
-        val db = DatabaseHandler(this)
+        //used to populate the database for testing purposes
+        //val db = DatabaseHandler(this)
         //test data
         //testData(db)
 
-       // val activityList = db.viewActivity("SELECT * FROM ${DatabaseHandler.TABLE_ACTIVITY} WHERE type = \"Basketball\"")
-        //Log.i("Testing DB", activityList.toString())
-
+        //add click listeners to all images
         imageAdd.setOnClickListener {
+            //create intent to move to another activity
             val intent = Intent(this,AddActivity::class.java)
+            //go to other activity
             startActivity(intent)
         }
 
@@ -67,6 +70,7 @@ class MainActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         }
     }
 
+    //data for testing
     private fun testData(db: DatabaseHandler) {
         db.addActivity(Activity("1-10-20","Basketball","1:00",11.0,true,3,"kew","fun",null,1))
         db.addActivity(Activity("2-10-20","Tennis","2:30",24.5,true,4,"East kew","Very fun",null,1))
@@ -81,16 +85,19 @@ class MainActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         db.addActivity(Activity("11-10-20","Wrestling","12:00",12.2,true,5,"Camberwell","Good times",null,1))
     }
 
+    //used to sync state of toggle button
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
         toggle.syncState()
     }
 
+    //when new configuration is set
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         toggle.onConfigurationChanged(newConfig)
     }
 
+    //when toggle button is clicked
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (toggle.onOptionsItemSelected(item)) {
             return true
@@ -98,14 +105,18 @@ class MainActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         return super.onOptionsItemSelected(item)
     }
 
+    //when item is selected in nav menu
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        //determine which menu item is selected and go to page
         when (item.itemId) {
             R.id.main -> Toast.makeText(this, "On Home Page", Toast.LENGTH_SHORT).show()
             R.id.add_activity -> intent = Intent(this,AddActivity::class.java)
             R.id.list -> intent = Intent(this,ViewActivity::class.java)
             R.id.schedule -> intent = Intent(this,ScheduleActivity::class.java)
         }
+        //close the drawer
         drawer.closeDrawer(GravityCompat.START)
+        //move to page
         startActivity(intent)
         return true
     }

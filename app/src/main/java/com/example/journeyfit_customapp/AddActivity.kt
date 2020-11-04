@@ -18,6 +18,7 @@ import java.time.format.DateTimeFormatter
 //Spinner: https://developer.android.com/guide/topics/ui/controls/spinner
 
 class AddActivity : AppCompatActivity(){
+    //create initial list for first time app users
     var activitiesList = mutableListOf<String>( "Running", "Walking", "Basketball", "Tennis")
     lateinit var spinnerValue: String
     lateinit var vActivity: Activity
@@ -39,7 +40,7 @@ class AddActivity : AppCompatActivity(){
         setContentView(R.layout.individual_activity)
 
         val db = DatabaseHandler(this)
-
+        //set up inputs
         dateInput = findViewById<EditText>(R.id.editDate)
         timeInput = findViewById<EditText>(R.id.editTime)
         distInput = findViewById<EditText>(R.id.editDistance)
@@ -48,27 +49,32 @@ class AddActivity : AppCompatActivity(){
         comInput = findViewById<EditText>(R.id.editComments)
         otherInput = findViewById<EditText>(R.id.editOtherActivityInput)
         val btnSubmit = findViewById<Button>(R.id.buttonSubmit)
-        // access the spinner
 
-
-
+        //initial hint set to current date so user does not need to enter date if they had just completed the activity
         val currentDate = LocalDateTime.now()
+        //format the date a specific way
         dateInput.hint = currentDate.format(formatter)
 
+        //eturn string list of unique activity types in the database
         val typesList = db.viewSet("type")
         Log.i("Testing", typesList.toString())
+        //add them to the list for the spinner
         typesList.forEach {
+            //if it already contains the string do not add it again
             if(!activitiesList.contains(it)){
                 activitiesList.add(it)
             }
         }
+        //add option for user to enter custom activity
         activitiesList.add("Other")
-
+        //don't let user edit otherInput unless "Other" is selected in spinner (executed later)
         otherInput.isEnabled = false
-
+        //set initial type variable as must not be null
         var type = "Running"
 
+        //check to see if activity was started via the view activity page and that data has been passed to this activity
         if(intent.getParcelableExtra<Activity>("activity") != null) {
+            //add all data to be displayed as text inputs
             vActivity = intent.getParcelableExtra<Activity>("activity")!!
             dateInput.setText(vActivity.date)
             type = vActivity.type
@@ -81,6 +87,7 @@ class AddActivity : AppCompatActivity(){
             activityId = vActivity.id
             btnSubmit.text = "update"
         }
+        //initialize spinner adapter and set up spinner
         val spinner = findViewById<Spinner>(R.id.spinner)
         if (spinner != null) {
             val adapter = ArrayAdapter(this,
@@ -93,36 +100,43 @@ class AddActivity : AppCompatActivity(){
                 AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(parent: AdapterView<*>,
                                                 view: View, position: Int, id: Long) {
-                        //Toast.makeText(this@AddActivity,activitiesList[position], Toast.LENGTH_SHORT).show()
+                        //set value to global variable
                         spinnerValue = activitiesList[position]
                         if (spinnerValue == "Other"){
+                            //enable user to write in other text input in other is selected in spinner
                             otherInput.isEnabled = true
                         }
                     }
                     override fun onNothingSelected(parent: AdapterView<*>) {
-                        // write code to perform some action
+                        //nothing
                     }
             }
         }
-
+        //when user presses submit button do this
         btnSubmit.setOnClickListener {
+            //if other input is enabled, set type to read other input else read from spinner
             val mType = if(otherInput.isEnabled){
                 otherInput.text.toString()
             }else{
                 spinnerValue
             }
+            //if nothing entered for distance make string equal to 0.0
             val dist = if(distInput.text.toString() != ""){
                 distInput.text.toString()
             } else {
                 "0.0"
             }
+            //if date not entered, set date value to the hint which is the current date
             val date = if(dateInput.text.toString() != ""){
                 dateInput.text.toString()
             } else {
                 dateInput.hint.toString()
             }
+            //check errors via error function below
             if (!checkErrors()) {
+                //if button is submit meaning user wants to add new activity then add activity to database
                 if(btnSubmit.text == "Submit") {
+                    //call addActivity and pass activity with variables in the text fields
                     db.addActivity(
                         Activity(
                             date,
@@ -138,6 +152,9 @@ class AddActivity : AppCompatActivity(){
                         )
                     )
                 } else {
+                    //else update the existing activity if the user selected activity via the view activity page
+                    //call updateActivity and pass activity with variables in the text fields
+                    //return result value to determine if the update was successful
                     val result = db.updateActivity(
                         Activity(
                             date,
@@ -153,41 +170,51 @@ class AddActivity : AppCompatActivity(){
                         )
                     )
                     Log.i("Testing",Activity(date, mType,timeInput.text.toString(),dist.toDouble(),true, feelInput.progress,locInput.text.toString(), comInput.text.toString(), vActivity.id,1).toString())
+                    //set text for Toast
                     val stringRes = if (result == 1){
                         "Update Successful"
                     } else  {
                         "Update Failed"
                     }
+                    //Show result of update
                     Toast.makeText(this,stringRes,Toast.LENGTH_LONG).show()
                 }
+                //finish activity and go back to previous page
                 finish()
             }
         }
     }
 
+    //check errors
     @RequiresApi(Build.VERSION_CODES.O)
     private fun checkErrors(): Boolean {
         var error = false
         try{
+            //make sure date is in the correct format and is in the past
             if(dateInput.text.toString() != ""){
                 if(LocalDate.parse(dateInput.text,formatter) > LocalDate.now()){
+                    //display this error if true
                     dateInput.error = "Input current or past date"
                     error = true
                 }
             } else {
-                LocalDate.parse(dateInput.hint,formatter).toString()
+               //check hint is correct format and is in the past
                 if(LocalDate.parse(dateInput.hint,formatter) > LocalDate.now()){
                     dateInput.error = "Input current or past date"
                     error = true
                 }
             }
         } catch (e: DateTimeException){
+            //if date can not be formatted it will catch here and display this error
             Log.i("Testing", "DateTimeException Thrown")
             dateInput.error = "Must be in format DD-MM-YY"
             error = true
         }
+        //create regex expression for time e.g. hh:MM
         val regex = "^([0-9]*):[0-5][0-9]$".toRegex()
+        //check to see if input matches regex expression
         if (!timeInput.text.toString().matches(regex)) {
+            //show error
             timeInput.error = "Please time spent as HH:MM e.g. 1 hour and 30 mins = 1:30"
             error = true
         }

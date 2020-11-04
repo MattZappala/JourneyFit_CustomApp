@@ -46,9 +46,12 @@ class ActivityAdapter(private var data: List<Activity>) : RecyclerView.Adapter<A
 
         @SuppressLint("SetTextI18n")
         fun bind(item: Activity, pos: Int) {
+            //make calling the context easier
             val context = ViewHolder(v).itemView.context
             db= DatabaseHandler(context)
+            //make item data a global variable
             mItem = item
+            //set colour of row object
             if(item.status == 0){
                v.setBackgroundResource(R.drawable.list_red)
             } else {
@@ -64,24 +67,34 @@ class ActivityAdapter(private var data: List<Activity>) : RecyclerView.Adapter<A
             v.setOnCreateContextMenuListener(this)
         }
 
+        //when a row is clicked
         override fun onCreateContextMenu(p0: ContextMenu?, p1: View?, p2: ContextMenu.ContextMenuInfo?) {
+            //set title of context menu
             p0?.setHeaderTitle("Action Menu");
-            var itemView = p0?.add(0, v.id, 0, "View");
-            var itemDelete = p0?.add(0, v.id, 0, "Delete");
+            //set values in item list
+            val itemView = p0?.add(0, v.id, 0, "View");
+            val itemDelete = p0?.add(0, v.id, 0, "Delete");
+            //set listener for each item in menu
             itemView?.setOnMenuItemClickListener(this)
             itemDelete?.setOnMenuItemClickListener(this)
         }
 
         override fun onMenuItemClick(p0: MenuItem?): Boolean {
             if (p0?.title == "View"){
+                //if menu item title is view send to add activity page and pass the activity data to it for editing
                 val intent = Intent(ViewHolder(v).itemView.context,AddActivity::class.java)
                 intent.putExtra("activity",mItem)
                 ViewHolder(v).itemView.context.startActivity(intent)
-            } else if (p0?.title == "Delete"){
+            }else if (p0?.title == "Delete"){
+                //if title is delete
                 Log.i("Testing", "Delete")
+                //if id item exists
                 mItem.id?.let { db.deleteActivity(it) }
+                //delete from database
                 data = db.viewActivity("SELECT * FROM ${DatabaseHandler.TABLE_ACTIVITY}")
+                //toast to say item deleted
                 Toast.makeText(ViewHolder(v).itemView.context,"Activity Deleted",Toast.LENGTH_LONG).show()
+                //notify that the data set has changed and update list
                 notifyDataSetChanged()
             }
             return true

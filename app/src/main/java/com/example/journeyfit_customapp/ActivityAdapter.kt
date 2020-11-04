@@ -64,11 +64,7 @@ class ActivityAdapter(private var data: List<Activity>) : RecyclerView.Adapter<A
             v.setOnCreateContextMenuListener(this)
         }
 
-        override fun onCreateContextMenu(
-            p0: ContextMenu?,
-            p1: View?,
-            p2: ContextMenu.ContextMenuInfo?
-        ) {
+        override fun onCreateContextMenu(p0: ContextMenu?, p1: View?, p2: ContextMenu.ContextMenuInfo?) {
             p0?.setHeaderTitle("Action Menu");
             var itemView = p0?.add(0, v.id, 0, "View");
             var itemDelete = p0?.add(0, v.id, 0, "Delete");
@@ -83,10 +79,9 @@ class ActivityAdapter(private var data: List<Activity>) : RecyclerView.Adapter<A
                 ViewHolder(v).itemView.context.startActivity(intent)
             } else if (p0?.title == "Delete"){
                 Log.i("Testing", "Delete")
-                Toast.makeText(ViewHolder(v).itemView.context,"Activity Deleted",Toast.LENGTH_LONG).show()
-                db.deleteActivity(mItem)
+                mItem.id?.let { db.deleteActivity(it) }
                 data = db.viewActivity("SELECT * FROM ${DatabaseHandler.TABLE_ACTIVITY}")
-                Log.i("Testing",data.toString())
+                Toast.makeText(ViewHolder(v).itemView.context,"Activity Deleted",Toast.LENGTH_LONG).show()
                 notifyDataSetChanged()
             }
             return true

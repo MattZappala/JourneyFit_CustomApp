@@ -52,25 +52,22 @@ class DatabaseHandler(context: Context): SQLiteOpenHelper(context,DATABASE_NAME,
         contentValues.put(KEY_LOCATION, act.location)
         contentValues.put(KEY_COMMENTS, act.comments)
         contentValues.put(KEY_STATUS, act.status)
-        //contentValues.put(KEY_ID,act.id)
 
-        // Inserting Row
         val success = db.insert(TABLE_ACTIVITY, null, contentValues)
-        //2nd argument is String containing nullColumnHack
-        db.close() // Closing database connection
+
+        db.close()
         return success
     }
 
     //method to read data
     fun viewActivity(query:String):List<Activity>{
         val actList:ArrayList<Activity> = ArrayList<Activity>()
-        var selectQuery = query
         val db = this.readableDatabase
         var cursor: Cursor? = null
         try{
-            cursor = db.rawQuery(selectQuery, null)
+            cursor = db.rawQuery(query, null)
         }catch (e: SQLiteException) {
-            db.execSQL(selectQuery)
+            db.execSQL(query)
             return ArrayList()
         }
         var aDate: String
@@ -122,13 +119,10 @@ class DatabaseHandler(context: Context): SQLiteOpenHelper(context,DATABASE_NAME,
     }
 
     //method to delete data
-    fun deleteActivity(act: Activity):Int{
+    fun deleteActivity(id: Int):Int{
         val db = this.writableDatabase
-        val contentValues = ContentValues()
-        contentValues.put(KEY_ID, act.id) // EmpModelClass UserId
-        // Deleting Row
-        val success = db.delete(TABLE_ACTIVITY,"id="+act.id,null)
-        db.close() // Closing database connection
+        val success = db.delete(TABLE_ACTIVITY, "id=$id",null)
+        db.close()
         return success
     }
 
@@ -144,9 +138,8 @@ class DatabaseHandler(context: Context): SQLiteOpenHelper(context,DATABASE_NAME,
         contentValues.put(KEY_LOCATION, act.location)
         contentValues.put(KEY_COMMENTS, act.comments)
         contentValues.put(KEY_STATUS, act.status)
-        // Updating Row
         val success = db.update(TABLE_ACTIVITY, contentValues,"id="+act.id,null)
-        db.close() // Closing database connection
+        db.close()
         return success
     }
 }

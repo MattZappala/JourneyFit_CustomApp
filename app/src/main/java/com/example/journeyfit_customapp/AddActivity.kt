@@ -49,7 +49,7 @@ class AddActivity : AppCompatActivity(){
         otherInput = findViewById<EditText>(R.id.editOtherActivityInput)
         val btnSubmit = findViewById<Button>(R.id.buttonSubmit)
         // access the spinner
-        val spinner = findViewById<Spinner>(R.id.spinner)
+
 
 
         val currentDate = LocalDateTime.now()
@@ -81,7 +81,7 @@ class AddActivity : AppCompatActivity(){
             activityId = vActivity.id
             btnSubmit.text = "update"
         }
-
+        val spinner = findViewById<Spinner>(R.id.spinner)
         if (spinner != null) {
             val adapter = ArrayAdapter(this,
                 android.R.layout.simple_spinner_item, activitiesList)
